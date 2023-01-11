@@ -14,7 +14,7 @@ const ChatComponent = ({ socket }) => {
     <div className="class-component">
       <ChatSideBar socket={socket} />
       <div className="chat-component-body">
-        <ChatBody messages={messages} />
+        <ChatBody messages={messages} socket={socket} />
         <ChatFooter socket={socket} />
       </div>
     </div>
