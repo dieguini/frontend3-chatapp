@@ -41,6 +41,7 @@ socketIO.on('connection', (socket) => {
   // Typing
   socket.on("typing", data => {
     console.log("typing client: ", data);
+    socketIO.emit("typingResponse", data);
   });
 
   // Users Handler
