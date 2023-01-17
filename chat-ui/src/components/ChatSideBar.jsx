@@ -9,16 +9,25 @@ const ChatSideBar = ({ socket }) => {
   }, [socket]);
 
   return <>
-      <h1>
+      {/* <h1>
         Chat Users SideBar
-      </h1>
-      <div>
+      </h1> */}
+      <div className="search">
+        <input type="text" placeholder="search" />
+      </div>
+      <ul className="list">
         {
           users.map((user) => (
-            <p key={user.socketID}>{user.userName}</p>
+            <li className="clearfix" key={user.socketID}>
+              <div className="about">
+                <div className="name">
+                  {user.userName}
+                </div>
+              </div>
+            </li>
           ))
         }
-      </div>
+      </ul>
     </>;
 };
 

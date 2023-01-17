@@ -13,12 +13,15 @@ const ChatComponent = ({ socket }) => {
   }, [messages, socket]);
 
   return (
-    <div className="class-component">
-      <ChatSideBar socket={socket} />
-      <div className="chat-component-body">
+    <div className="container clearfix">
+      <ChatSideBar className="people-list" socket={socket} />
+      <ChatBody className="chat" messages={messages} socket={socket} />
+      <ChatFooter className="chat-message clearfix" socket={socket} />
+      
+      {/* <div className="chat-component-body">
         <ChatBody messages={messages} socket={socket} />
         <ChatFooter socket={socket} />
-      </div>
+      </div> */}
     </div>
   );
 };
