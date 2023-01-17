@@ -4,17 +4,18 @@ const ChatFooter = ({ socket }) => {
   const [message, setMessage] = useState([]);
   const [typing, setTyping] = useState("");
 
-  useEffect(() => {
+  /* useEffect(() => {
     socket.on("messageResponse", (data) =>
       console.log("message from server: ", data)
     );
-  }, [message, socket]);
+  }, [message, socket]); */
 
   useEffect(() => {
     socket.on("typing", (data) => setTyping(data));
   }, [socket]);
 
-  const my_user = localStorage.getItem("userName");
+  const my_user_object = localStorage.getItem("userObject");
+  const user_object_parse = JSON.parse(my_user_object);
 
   const handleMessage = useCallback(
     (e) => {
@@ -23,7 +24,8 @@ const ChatFooter = ({ socket }) => {
       if (message.trim()) {
         socket.emit("message", {
           message: message,
-          userName: my_user,
+          userName: user_object_parse.userName,
+          userId: user_object_parse.userId,
           socketId: socket.id,
         });
         setMessage("");
@@ -38,10 +40,10 @@ const ChatFooter = ({ socket }) => {
   };
 
   const handleKeyUp = (e) => {
-    socket.emit("typing", {typing: false, userName: my_user});
+    socket.emit("typing", {typing: false, userId: user_object_parse.userId});
   };
   const handleKeyDown = (e) => {
-    socket.emit("typing", {typing: true, userName: my_user});
+    socket.emit("typing", {typing: true, userId: user_object_parse.userId});
   };
 
   return (

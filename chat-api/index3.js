@@ -50,6 +50,15 @@ socketIO.on('connection', (socket) => {
     socketIO.emit("newUserResponse", users);
   });
 
+  // Users Handler
+  socket.on("removeUser", userId => {
+    users.splice(
+      users.findIndex(e => e.userId === userId),
+      1
+    );
+    socketIO.emit("newUserResponse", users);
+  });
+
   // Recibiendo mensaje del cliente
   socket.on("helloFromClient", (...args) => {
     console.log("arguments: ", args);

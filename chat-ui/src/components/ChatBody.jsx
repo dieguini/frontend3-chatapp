@@ -16,13 +16,16 @@ const ChatBody = ({ messages, socket }) => {
     console.log("this is the user response", users);
   }, [socket]); */
 
+  const my_user_object = localStorage.getItem("userObject");
+  const user_object_parse = JSON.parse(my_user_object);
+
   const leaveChat = () => {
-    localStorage.removeItem("userName");
+    localStorage.removeItem("userObject");
+    socket.emit("removeUser", user_object_parse.userId);
     navigate("/");
     window.location.reload();
   };
 
-  const my_user = localStorage.getItem("userName");
 
   return (
     <>
@@ -30,11 +33,11 @@ const ChatBody = ({ messages, socket }) => {
         <p>Socket IO chat</p>
         <button onClick={leaveChat}>Leave Chat</button>
       </header>
-      { typing.typing && typing.userName !== my_user ? <p>...</p> : ""} 
+      { typing.typing && typing.userId !== user_object_parse.userId ? <p>...</p> : ""} 
       <div>
         {messages.map((message) => (
           <>
-            <p key={message}>User: {message.userName === my_user ? "you" : message.userName}</p>
+            <p key={message.socketId}>User: {message.userId === user_object_parse.userId ? "you" : message.userName}</p>
             <p>{ message.message }</p>
           </>
         ))}
