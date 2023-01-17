@@ -34,13 +34,22 @@ const ChatBody = ({ messages, socket }) => {
         <button onClick={leaveChat}>Leave Chat</button>
       </header>
       { typing.typing && typing.userId !== user_object_parse.userId ? <p>...</p> : ""} 
-      <div>
-        {messages.map((message) => (
-          <>
-            <p key={message.socketId}>User: {message.userId === user_object_parse.userId ? "you" : message.userName}</p>
-            <p>{ message.message }</p>
-          </>
-        ))}
+      <div className="chat-history">
+        <ul>
+          {messages.map((message, index) => (
+            <li className="clearfix">
+              <div className="message-data align-right">
+                <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
+                <span class="message-data-name" >User: {message.userId === user_object_parse.userId ? "you" : message.userName}</span> <i class="fa fa-circle me"></i>
+              </div>
+              <div class="message other-message float-right">
+                { message.message }
+              </div>
+              {/* <p key={`user_${index}`}>User: {message.userId === user_object_parse.userId ? "you" : message.userName}</p>
+              <p key={`message_${index}`}>{ message.message }</p> */}
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   );
