@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { /* useEffect, */ useState } from "react";
+import uuid from 'react-uuid';
 import { useNavigate } from "react-router-dom";
 
 const Home = ({ socket }) => {
@@ -7,8 +8,9 @@ const Home = ({ socket }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem("userName", userName);
-    socket.on("newUser", { userName, socketID: socket.id });
+    const user = { userId: uuid(), userName: userName, socketID: socket.id };
+    localStorage.setItem("userObject", JSON.stringify(user));
+    socket.emit("newUser", user);
     navigate("/chat");
   };
 
